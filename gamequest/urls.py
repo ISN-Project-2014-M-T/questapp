@@ -5,6 +5,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^polls/', include('gamequest.polls.urls', namespace="polls")),
+    url(r'^quest/', include('gamequest.quest.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from gamequest.quest.models import Stage, Choice
+from gamequest.quest.models import Stage, Choice, PlayerRecord
 
 class ChoiceInline(admin.StackedInline):
     model = Choice
@@ -14,5 +14,14 @@ class StageAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline]
     list_display = ('name', 'id')
 
+class PlayerRecordAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,               {'fields': ['name']}),
+        (None,               {'fields': ['email']}),
+    ]
+    list_display = ('name', 'id')
+
+
 
 admin.site.register(Stage, StageAdmin)
+admin.site.register(PlayerRecord, PlayerRecordAdmin)
