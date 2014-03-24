@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gamequest.polls',
+    'gamequest.quest',
 )
 
 MIDDLEWARE_CLASSES = (
