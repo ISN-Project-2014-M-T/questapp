@@ -1,0 +1,28 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'quest/custom.css' %}" />
+
+{% if stage.name|length > 1 %}
+
+<h1>{{ stage.name }}</h1>
+
+{% else %}
+
+<p>errror message</p>
+
+{% endif %}
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<p>{{ stage.history }}</p>
+
+<h3>{{ stage.question }}</h3>
+
+<ul>
+{% for choice in stage.choice_set.all %}
+<li><a href="../{{ choice.redirection }}">{{ choice.proposition }}</a></li>
+{% endfor %}
+</ul>
+
+
+</form>

@@ -10,6 +10,12 @@ class Choice(models.Model):
     proposition = models.CharField(max_length=200)
     redirection = models.IntegerField(default=0)
 
+class monster(models.Model):
+    stage = models.ForeignKey(Stage)
+    name = models.CharField(blank=True, max_length=200)
+    life = models.IntegerField(default=0)
+
+
 class PlayerRecord(models.Model):
     name    = models.CharField(max_length=60)
     email   = models.EmailField(max_length=120)

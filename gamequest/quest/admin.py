@@ -1,5 +1,11 @@
 from django.contrib import admin
-from gamequest.quest.models import Stage, Choice, PlayerRecord
+
+from gamequest.quest.models import Stage, Choice, PlayerRecord, monster
+
+
+class monsterInline(admin.TabularInline):
+    model = monster
+    extra = 1
 
 class ChoiceInline(admin.StackedInline):
     model = Choice
@@ -11,7 +17,7 @@ class StageAdmin(admin.ModelAdmin):
         ('Histoire à lire',               {'fields': ['history']}),
         ('Question à poser',               {'fields': ['question']}),
     ]
-    inlines = [ChoiceInline]
+    inlines = [ChoiceInline, monsterInline]
     list_display = ('name', 'id')
 
 class PlayerRecordAdmin(admin.ModelAdmin):
