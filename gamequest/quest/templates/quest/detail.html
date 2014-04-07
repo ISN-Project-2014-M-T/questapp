@@ -1,28 +1,118 @@
-{% load staticfiles %}
+<html lang="fr"><head>
 
-<link rel="stylesheet" type="text/css" href="{% static 'quest/custom.css' %}" />
+    {% load staticfiles %}
 
-{% if stage.name|length > 1 %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Endless Game Quest | Part of Story">
+    <meta name="author" content="Corentin Mors">
+    <link rel="shortcut icon" href="">
 
-<h1>{{ stage.name }}</h1>
+    <title>{{ stage.name }} | Endless Quest</title>
 
-{% else %}
+    <!-- Bootstrap Framework CSS -->
+    <link href="{% static 'quest/bootstrap.min.css' %}" rel="stylesheet">
 
-<p>errror message</p>
+    <!-- Importer la feuille de style personnalisée -->
+    <link rel="stylesheet" type="text/css" href="{% static 'quest/custom.css' %}" />
 
-{% endif %}
+    <!-- Police d'icônes -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  <style type="text/css"></style><style id="holderjs-style" type="text/css"></style></head>
+
+  <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">Endless Game Quest</h3>
+              <ul class="nav masthead-nav">
+                <li><a href="http://pixelswap.fr/endless/">Acceuil</a></li>
+                <li class="active"><a href="">Histoire</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="inner cover">
+
+            <h1 class="cover-heading">{{ stage.name }}</h1>
+
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <p>{{ stage.history }}</p>
 
+
+<BR>
+
+{% for monster in stage.monster_set.all %}
+{% if monster.name|length > 1 %}
+
+
+
+<p class="lead">Oh un {{ monster.name }} apparait et semble vous barrer la route !</p>
+
+
+<script>
+    var life = {{monster.life}}
+</script>
+
+<img src="{{monster.image}}" width="500px">
+
+
+
+{% else %}
+
+
 <h3>{{ stage.question }}</h3>
 
-<ul>
+
+
+<div class="btn-group">
+
 {% for choice in stage.choice_set.all %}
-<li><a href="../{{ choice.redirection }}">{{ choice.proposition }}</a></li>
+<button type="button" class="btn btn-default" onclick="location.href='../{{ choice.redirection }}';"> {{ choice.proposition }}</button>
 {% endfor %}
-</ul>
+</div>
 
 
-</form>
+{% endif %}
+{% endfor %}
+
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Made with <i class="fa fa-heart"></i> in Vichy</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="{% static 'quest/bootstrap.min.js' %}"></script>
+ <!--   <script src="{% static 'quest/docs.min.js' %}"></script> -->
+
+
+</body></html>

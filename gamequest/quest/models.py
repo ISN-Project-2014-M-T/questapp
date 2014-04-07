@@ -14,16 +14,16 @@ class monster(models.Model):
     stage = models.ForeignKey(Stage)
     name = models.CharField(blank=True, max_length=200)
     life = models.IntegerField(default=0)
+    image = models.CharField(max_length=120)
 
 
 class PlayerRecord(models.Model):
     name    = models.CharField(max_length=60)
     email   = models.EmailField(max_length=120)
-    created = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return "%s - %s" % (self.name, self.email)
 
     class Meta:
-        ordering        = ["created"]
+        ordering        = ["id"]
         unique_together = [["name", "email"]]

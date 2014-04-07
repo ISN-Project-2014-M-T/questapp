@@ -9,7 +9,7 @@ class monsterInline(admin.TabularInline):
 
 class ChoiceInline(admin.StackedInline):
     model = Choice
-    extra = 3
+    extra = 1
 
 class StageAdmin(admin.ModelAdmin):
     fieldsets = [
