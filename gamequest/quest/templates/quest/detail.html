@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Endless Game Quest | Part of Story">
     <meta name="author" content="Corentin Mors">
-    <link rel="shortcut icon" href="">
+    <link rel="shortcut icon" href="{% static 'quest/icon.ico' %}">
 
     <title>{{ stage.name }} | Endless Quest</title>
 
@@ -21,11 +21,14 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- HTML5 shim et Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- Permet d'utiliser le css sur les version de Internet Explorer antérieures à IE9 -->
+
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
   <style type="text/css"></style><style id="holderjs-style" type="text/css"></style></head>
 
   <body>
@@ -40,7 +43,7 @@
             <div class="inner">
               <h3 class="masthead-brand">Endless Game Quest</h3>
               <ul class="nav masthead-nav">
-                <li><a href="http://pixelswap.fr/endless/">Acceuil</a></li>
+                <li><a href="http://pixelswap.fr/endless/">Accueil</a></li>
                 <li class="active"><a href="">Histoire</a></li>
                 <li><a href="#">Contact</a></li>
               </ul>
@@ -107,12 +110,14 @@
 
     </div>
 
-    <!-- Bootstrap core JavaScript
+    <!-- Bootstrap JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- Placé à la fin du document pour un chargement plus rapide -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="{% static 'quest/bootstrap.min.js' %}"></script>
- <!--   <script src="{% static 'quest/docs.min.js' %}"></script> -->
+
+    <!-- Complément pour le javascript (inutilisé) -->
+    <!--   <script src="{% static 'quest/docs.min.js' %}"></script> -->
 
 
 </body></html>
