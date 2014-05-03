@@ -1,1 +1,126 @@
-<h1>Welcome All !</h1>
+<html lang="fr"><head>
+
+    {% load staticfiles %}
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Endless Game Quest | Part of Story">
+    <meta name="author" content="Corentin Mors">
+    <link rel="shortcut icon" href="{% static 'quest/icon.ico' %}">
+
+    <title>Bienvenue | Endless Quest</title>
+
+    <!-- Bootstrap Framework CSS -->
+    <link href="{% static 'quest/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Importer la feuille de style personnalisée -->
+    <link rel="stylesheet" type="text/css" href="{% static 'quest/custom.css' %}" />
+
+    <!-- Police d'icônes -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim et Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- Permet d'utiliser le css sur les version de Internet Explorer antérieures à IE9 -->
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <style type="text/css"></style><style id="holderjs-style" type="text/css"></style></head>
+
+  <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">Endless Game Quest</h3>
+              <ul class="nav masthead-nav">
+                <li><a href="http://pixelswap.fr/endless/">Accueil</a></li>
+                <li class="active"><a href="">Histoire</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="inner cover">
+
+            <h1 class="cover-heading">Bienvenue joueur !</h1>
+
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form name="formInput" action= "">
+<label>Quel est ton nom ?</label>
+<input id="name_input" class="span3" style="margin: 0pt auto;" type="text" placeholder="Entre ton nom" data-provide="typeahead" data-items="10" data-source="[&quot;AAA&quot;,&quot;BBB&quot;,&quot;CCC&quot;,&quot;DDD&quot;,&quot;EEE&quot;,&quot;FFF&quot;,&quot;GGG&quot;,&quot;HHH&quot;,&quot;III&quot;,&quot;JJJ&quot;,&quot;KKK&quot;,&quot;LLL&quot;]"/>
+</label>
+
+<br>
+
+<div class="form-actions" "span3">
+<p class="btn" onclick="launch()"/>Choisir</p>
+    <script language="JavaScript" type="Text/JavaScript">
+
+function launch()
+    {
+    var name = document.getElementById('name_input').value;
+    createCookie("username",name,30);
+    createCookie("life",5000,30);
+    createCookie("job","thief",30);
+    createCookie("item",3,30);
+    createCookie("arme",0,30);
+
+    document.getElementById("pop").style.display = "block";
+
+    }
+
+function createCookie(nom,valeur,exdays)
+    {
+    var d = new Date();
+    d.setTime(d.getTime()+(exdays*24*60*60*1000));
+    var expires = "expires="+d.toGMTString();
+    document.cookie = nom+"="+valeur+"; "+expires;
+    }
+
+</script>
+</div>
+</form>
+
+
+<br> <br> <br>
+
+<a id="pop" class="btn btn-lg btn-default" onclick="location.href='http://mikescops.pythonanywhere.com/quest/1/';"> Commencer l'aventure</a>
+
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Made with <i class="fa fa-heart"></i> in Vichy</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap JavaScript
+    ================================================== -->
+    <!-- Placé à la fin du document pour un chargement plus rapide -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="{% static 'quest/bootstrap.min.js' %}"></script>
+
+    <!-- Complément pour le javascript (inutilisé) -->
+    <!--   <script src="{% static 'quest/docs.min.js' %}"></script> -->
+
+
+
+</body></html>

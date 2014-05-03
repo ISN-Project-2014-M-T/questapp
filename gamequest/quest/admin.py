@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from gamequest.quest.models import Stage, Choice, PlayerRecord, monster
+from gamequest.quest.models import Stage, Choice, monster
 
 
 class monsterInline(admin.TabularInline):
@@ -20,14 +20,5 @@ class StageAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline, monsterInline]
     list_display = ('name', 'id')
 
-class PlayerRecordAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None,               {'fields': ['name']}),
-        (None,               {'fields': ['email']}),
-    ]
-    list_display = ('name', 'id')
-
-
 
 admin.site.register(Stage, StageAdmin)
-admin.site.register(PlayerRecord, PlayerRecordAdmin)

@@ -69,13 +69,222 @@
 
 <p class="lead">Oh un {{ monster.name }} apparait et semble vous barrer la route !</p>
 
+<a class="btn btn-lg btn-default" onclick="javascript:Combat()"> Lancer le combat</a>
 
-<script>
-    var life = {{monster.life}}
+
+<!-- Système de Combat -->
+<script type="text/javascript">
+
+function Combat()
+{
+
+function createCookie(nom,valeur,exdays)
+{
+var d = new Date();
+d.setTime(d.getTime()+(exdays*24*60*60*1000));
+var expires = "expires="+d.toGMTString();
+document.cookie = nom+"="+valeur+"; "+expires;
+}
+
+function getCookie(nom)
+{
+var name = nom + "=";
+var allcookies = document.cookie.split(';');
+for(var i=0; i<allcookies.length; i++)
+  {
+  var c = allcookies[i].trim();
+  if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+  }
+return "";
+}
+
+function fail(escape)
+{
+    var chance = 0;
+    if  (escape == 2)
+    {
+        var e = Math.floor((Math.random() * 5) + 1);
+        if (e == 3)
+        {
+            var chance = 1
+        }
+
+    }
+    else if (escape == 1)
+    {
+        var e = Math.floor((Math.random() * 10) + 1);
+        if (e == 3)
+        {
+            var chance = 1;
+        }
+    }
+    return chance
+}
+
+
+function Critical()
+{
+    var h = Math.floor((Math.random() * 10) + 1);
+    var ulti = 1;
+    if (h==7)
+    {
+        var ulti = 5;
+    }
+    return ulti
+}
+
+function De()
+{
+    var random = Math.floor((Math.random() * 6) + 1);
+
+    return random
+}
+
+function Level(zone)
+{
+    var n='{{ monster.name }}';
+    var v={{ monster.life }};
+    var t=0.60;
+    return[n, v, t];
+}
+var Joueur = getCookie("username");
+var classe = getCookie("job");
+var PlayerLife = getCookie("life");
+var potion = getCookie("item");
+var zone = getCookie("lieu");
+var weapon = getCookie("arme")
+var Enemy = Level(zone);
+var pv = Enemy[1];
+if (classe == "mage")
+{
+    var power = 2;
+    var escape = 1;
+    var lifemax = 5000;
+}
+else if (classe == "warrior")
+{
+    var power = 1;
+    var escape = 1;
+    var lifemax = 10000;
+}
+else if (classe == "thief")
+{
+    var power = 1;
+    var escape = 2;
+    var lifemax = 5000;
+}
+if (weapon == 1)
+{
+    var power = power*5;
+}
+while(pv>0 && PlayerLife>0)
+{
+    var choice = 0;
+    while (choice!=1 && choice!=2)
+    {
+        var choice = prompt("Voulez-vous attaquer ou vous soigner?(1=attaquer, 2=soigner)");
+    }
+    if (choice == 2)
+    {
+        var attempt = Math.floor((Math.random() * 5) + 1);
+        if (attempt = 2 && PlayerLife<lifemax)
+        {
+            var PlayerLife = PlayerLife + 1000;
+            if(Playerlife>lifemax)
+            {
+                var PlayerLife = lifemax;
+            }
+            alert("Vous vous êtes soigné");
+        }
+        else
+        {
+        alert("Votre soin à échoué");
+        }
+    }
+    else if (choice == 1)
+    {
+        var a = De();
+        var b = De();
+        var c = De();
+        var crit1 = Critical();
+        var total = (a+b+c)*10*crit1*power;
+        var x = De();
+        var y = De();
+        var z = De();
+        var crit2 = Critical();
+        var total2 = (x+y+z)*10*Enemy[2]*crit2;
+        var result1 = PlayerLife - total2;
+        var result2 = pv - total;
+        alert(Joueur + " : " + PlayerLife + " pv" + "         Ennemi : " + pv + " pv");
+        var dodge = fail(escape);
+        if (dodge == 1 && crit1 == 1)
+        {
+            alert("Dommages infligés : " + a + " " + b + " " + c + " => " + total);
+            alert("Vous avez évité l'attaque ennemie!!!");
+        }
+        else if (dodge == 1 && crit1 == 5)
+        {
+            alert("Dommages infligés : " + a + " " + b + " " + c + " => " + total + " Coup Critique!!!");
+            alert("Vous avez évité l'attaque ennemie!!!");
+        }
+        else if(crit1 == 1 && crit2 == 1)
+        {
+            alert("Dommages infligés : " + a + " " + b + " " + c + " => " + total);
+            alert("Dommages reçus : " + x + " " + y + " " + z + " => " + total2);
+        }
+        else if(crit1 == 5 && crit2 == 5)
+        {
+            alert("Dommages infligés : " + a + " " + b + " " + c + " => " + total + " Coup Critique!!!");
+            alert("Dommages reçus : " + x + " " + y + " " + z + " => " + total2 + " Coup Critique!!!");
+        }
+        else if(crit1 == 5)
+        {
+            alert("Dommages infligés : " + a + " " + b + " " + c + " => " + total + " Coup Critique!!!");
+            alert("Dommages reçus : " + x + " " + y + " " + z + " => " + total2);
+        }
+        else if(crit2 == 5)
+        {
+            alert("Dommages infligés : " + a + " " + b + " " + c + " => " + total);
+            alert("Dommages reçus : " + x + " " + y + " " + z + " => " + total2 + " Coup Critique!!!");
+        }
+        var PlayerLife = result1;
+        var pv = result2;
+        if(pv <= 0)
+        {
+            var pv = 0;
+            alert("Player 1" + "           Enemy " + Enemy[0]);
+            alert("Pv : " + PlayerLife + "         Pv : " + pv);
+            alert("Vous avez gagné!");
+        }
+        else if(PlayerLife <= 0)
+        {
+            var PlayerLife = 0;
+            alert("Player 1" + "           Ennemi " + Enemy[0]);
+            alert("Pv : " + PlayerLife + "         Pv : " + pv);
+            alert("Vous êtes mort...");
+            if (potion>0)
+            {
+                if (confirm("Voulez-vous utiliser un continue?"))
+                {
+                    var PlayerLife = lifemax;
+                    var potion = potion - 1;
+                }
+                else
+                {
+                    alert("GAME OVER");
+                }
+            }
+        }
+    }
+}
+    createCookie("username", Joueur,30);
+    createCookie("life", PlayerLife,30);
+    createCookie("lieu", zone,30);
+    createCookie("job", classe,30);
+    createCookie("item", potion,30);
+    createCookie("arme",weapon,30);
+}
 </script>
-
-<img src="{{monster.image}}" width="500px">
-
 
 
 {% else %}
@@ -118,6 +327,7 @@
 
     <!-- Complément pour le javascript (inutilisé) -->
     <!--   <script src="{% static 'quest/docs.min.js' %}"></script> -->
+
 
 
 </body></html>

@@ -4,6 +4,9 @@ class Stage(models.Model):
     name = models.CharField(max_length=100)
     history = models.TextField()
     question = models.CharField(max_length=200)
+    gain = models.IntegerField(default=0)
+    perte = models.IntegerField(default=0)
+    weapon = models.IntegerField(default=0)
 
 class Choice(models.Model):
     stage = models.ForeignKey(Stage)
@@ -14,16 +17,6 @@ class monster(models.Model):
     stage = models.ForeignKey(Stage)
     name = models.CharField(blank=True, max_length=200)
     life = models.IntegerField(default=0)
-    image = models.CharField(max_length=120)
-
-
-class PlayerRecord(models.Model):
-    name    = models.CharField(max_length=60)
-    email   = models.EmailField(max_length=120)
-
-    def __unicode__(self):
-        return "%s - %s" % (self.name, self.email)
-
-    class Meta:
-        ordering        = ["id"]
-        unique_together = [["name", "email"]]
+    taux = models.IntegerField(default=0)
+    win = models.IntegerField(default=0)
+    loose = models.IntegerField(default=0)
