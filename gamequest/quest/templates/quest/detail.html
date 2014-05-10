@@ -29,9 +29,79 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-  <style type="text/css"></style><style id="holderjs-style" type="text/css"></style></head>
+  <style type="text/css"></style><style id="holderjs-style" type="text/css"></style>
 
-  <body>
+
+
+  </head>
+
+  <body onload="verif()">
+
+        <script type="text/javascript">
+
+function verif(){
+var ActualLife = getCookie("life");
+var potion = getCookie("item");
+var classe = getCookie("job");
+var PlayerLife = parseInt(ActualLife) + parseInt({{ stage.gain }}) - parseInt({{ stage.perte }});
+
+function createCookie(nom,valeur,exdays)
+{
+var d = new Date();
+d.setTime(d.getTime()+(exdays*24*60*60*1000));
+var expires = "expires="+d.toGMTString();
+document.cookie = nom+"="+valeur+"; "+expires + ";path=/quest";
+}
+
+function getCookie(nom)
+{
+var name = nom + "=";
+var allcookies = document.cookie.split(';');
+for(var i=0; i<allcookies.length; i++)
+  {
+  var c = allcookies[i].trim();
+  if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+  }
+return "";
+}
+
+
+if (classe == "mage")
+{
+    var lifemax = 5000;
+}
+else if (classe == "warrior")
+{
+    var lifemax = 10000;
+}
+else if (classe == "thief")
+{
+    var lifemax = 5000;
+}
+
+        if(PlayerLife < 1)
+        {
+            var PlayerLife = 0;
+            alert("Vous êtes mort...");
+            if (potion>0)
+            {
+                if (confirm("Voulez-vous utiliser un continue?"))
+                {
+                    var PlayerLife = lifemax;
+                    var potion = parseInt(potion) - 1;
+                }
+                else
+                {
+                    alert("GAME OVER");
+                }
+        }
+        }
+createCookie("life", PlayerLife,30);
+createCookie("item", potion,30);
+}
+
+</script>
+
 
     <div class="site-wrapper">
 
@@ -83,7 +153,7 @@ function createCookie(nom,valeur,exdays)
 var d = new Date();
 d.setTime(d.getTime()+(exdays*24*60*60*1000));
 var expires = "expires="+d.toGMTString();
-document.cookie = nom+"="+valeur+"; "+expires;
+document.cookie = nom+"="+valeur+"; "+expires + ";path=/quest";
 }
 
 function getCookie(nom)
@@ -144,7 +214,7 @@ function Level(zone)
 {
     var n='{{ monster.name }}';
     var v={{ monster.life }};
-    var t=0.60;
+    var t={{ monster.taux }}*0.01;
     return[n, v, t];
 }
 var Joueur = getCookie("username");
@@ -179,44 +249,62 @@ if (weapon == 1)
 }
 while(pv>0 && PlayerLife>0)
 {
+    var a = De();
+    var b = De();
+    var c = De();
+    var crit1 = Critical();
+    var x = De();
+    var y = De();
+    var z = De();
+    var crit2 = Critical();
+    alert(Joueur + " : " + PlayerLife + " pv" + "         Ennemi : " + pv + " pv");
+    var dodge = fail(escape);
     var choice = 0;
+    var attempt = Math.floor((Math.random() * 5) + 1);
     while (choice!=1 && choice!=2)
     {
         var choice = prompt("Voulez-vous attaquer ou vous soigner?(1=attaquer, 2=soigner)");
     }
     if (choice == 2)
     {
-        var attempt = Math.floor((Math.random() * 5) + 1);
-        if (attempt = 2 && PlayerLife<lifemax)
+        if (attempt == 2)
         {
             var PlayerLife = PlayerLife + 1000;
-            if(Playerlife>lifemax)
+            if(PlayerLife>lifemax)
             {
                 var PlayerLife = lifemax;
             }
             alert("Vous vous êtes soigné");
+            alert(Joueur + " : " + PlayerLife + " pv" + " Ennemi : " + pv + " pv");
         }
         else
         {
         alert("Votre soin à échoué");
         }
+        var total2 = (x+y+z)*10*Enemy[2]*crit2;
+        var result1 = PlayerLife - total2;
+        if (dodge == 1)
+        {
+            alert("Vous avez évité l'attaque ennemie!!!");
+        }
+        else if(crit2 == 1)
+        {
+            alert("Dommages reçus : " + x + " " + y + " " + z + " => " + total2);
+            var PlayerLife = result1;
+        }
+        else if(crit2 == 5)
+        {
+            alert("Dommages reçus : " + x + " " + y + " " + z + " => " + total2 + " Coup Critique!!!");
+            var PlayerLife = result1;
+        }
+
     }
     else if (choice == 1)
     {
-        var a = De();
-        var b = De();
-        var c = De();
-        var crit1 = Critical();
         var total = (a+b+c)*10*crit1*power;
-        var x = De();
-        var y = De();
-        var z = De();
-        var crit2 = Critical();
         var total2 = (x+y+z)*10*Enemy[2]*crit2;
         var result1 = PlayerLife - total2;
         var result2 = pv - total;
-        alert(Joueur + " : " + PlayerLife + " pv" + "         Ennemi : " + pv + " pv");
-        var dodge = fail(escape);
         if (dodge == 1 && crit1 == 1)
         {
             alert("Dommages infligés : " + a + " " + b + " " + c + " => " + total);
@@ -231,55 +319,59 @@ while(pv>0 && PlayerLife>0)
         {
             alert("Dommages infligés : " + a + " " + b + " " + c + " => " + total);
             alert("Dommages reçus : " + x + " " + y + " " + z + " => " + total2);
+            var PlayerLife = result1;
         }
         else if(crit1 == 5 && crit2 == 5)
         {
             alert("Dommages infligés : " + a + " " + b + " " + c + " => " + total + " Coup Critique!!!");
             alert("Dommages reçus : " + x + " " + y + " " + z + " => " + total2 + " Coup Critique!!!");
+            var PlayerLife = result1;
         }
         else if(crit1 == 5)
         {
             alert("Dommages infligés : " + a + " " + b + " " + c + " => " + total + " Coup Critique!!!");
             alert("Dommages reçus : " + x + " " + y + " " + z + " => " + total2);
+            var PlayerLife = result1;
         }
         else if(crit2 == 5)
         {
             alert("Dommages infligés : " + a + " " + b + " " + c + " => " + total);
             alert("Dommages reçus : " + x + " " + y + " " + z + " => " + total2 + " Coup Critique!!!");
+            var PlayerLife = result1;
         }
-        var PlayerLife = result1;
         var pv = result2;
-        if(pv <= 0)
+    }
+    if(pv <= 0)
+    {
+        var pv = 0;
+        alert(Joueur + " : " + PlayerLife + "         Ennemi : " + pv + " pv");
+        alert("Vous avez gagné!");
+    }
+    else if(PlayerLife <= 0)
+    {
+        var PlayerLife = 0;
+        alert(Joueur + " : " + PlayerLife + "         Ennemi : " + pv + " pv");
+        alert("Vous êtes mort...");
+        if (potion>0)
         {
-            var pv = 0;
-            alert("Player 1" + "           Enemy " + Enemy[0]);
-            alert("Pv : " + PlayerLife + "         Pv : " + pv);
-            alert("Vous avez gagné!");
-        }
-        else if(PlayerLife <= 0)
-        {
-            var PlayerLife = 0;
-            alert("Player 1" + "           Ennemi " + Enemy[0]);
-            alert("Pv : " + PlayerLife + "         Pv : " + pv);
-            alert("Vous êtes mort...");
-            if (potion>0)
+            if (confirm("Voulez-vous utiliser un continue?"))
             {
-                if (confirm("Voulez-vous utiliser un continue?"))
-                {
-                    var PlayerLife = lifemax;
-                    var potion = potion - 1;
-                }
-                else
-                {
-                    alert("GAME OVER");
-                }
+                var PlayerLife = lifemax;
+                var potion = potion - 1;
             }
+            else
+            {
+                alert("GAME OVER");
+            }
+        }
+        else
+        {
+            alert("GAME OVER")
         }
     }
 }
     createCookie("username", Joueur,30);
     createCookie("life", PlayerLife,30);
-    createCookie("lieu", zone,30);
     createCookie("job", classe,30);
     createCookie("item", potion,30);
     createCookie("arme",weapon,30);

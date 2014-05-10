@@ -16,6 +16,8 @@ class StageAdmin(admin.ModelAdmin):
         (None,               {'fields': ['name']}),
         ('Histoire à lire',               {'fields': ['history']}),
         ('Question à poser',               {'fields': ['question']}),
+        ('Point de vie gagnés',               {'fields': ['gain']}),
+        ('Points de vie perdus',               {'fields': ['perte']}),
     ]
     inlines = [ChoiceInline, monsterInline]
     list_display = ('name', 'id')
