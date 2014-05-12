@@ -73,7 +73,6 @@ function launch()
     var name = document.getElementById('name_input').value;
     createCookie("username",name,30);
     createCookie("life",5000,30);
-    createCookie("job","thief",30);
     createCookie("item",3,30);
     createCookie("arme",0,30);
 
@@ -89,6 +88,12 @@ function createCookie(nom,valeur,exdays)
     document.cookie = nom+"="+valeur+"; "+expires;
     }
 
+  function choix_classe(classe)
+    {
+    createCookie("job",classe,30);
+    location.href = "http://mikescops.pythonanywhere.com/quest/1/";
+    }
+
 </script>
 </div>
 </form>
@@ -96,7 +101,18 @@ function createCookie(nom,valeur,exdays)
 
 <br> <br> <br>
 
-<a id="pop" class="btn btn-lg btn-default" onclick="location.href='http://mikescops.pythonanywhere.com/quest/1/';"> Commencer l'aventure</a>
+<!-- <a id="pop" class="btn btn-lg btn-default" onclick="location.href='http://mikescops.pythonanywhere.com/quest/1/';"> Commencer l'aventure</a> -->
+
+<div class="btn-group" id="pop">
+
+
+<button type="button" class="btn btn-default" onclick="javascript:choix_classe('thief')"> Voleur</button>
+<button type="button" class="btn btn-default" onclick="javascript:choix_classe('mage')"> Mage</button>
+<button type="button" class="btn btn-default" onclick="javascript:choix_classe('warrior')"> Guerrier</button>
+
+
+
+</div>
 
           </div>
 

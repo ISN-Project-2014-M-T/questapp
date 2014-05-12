@@ -93,6 +93,7 @@ else if (classe == "thief")
                 else
                 {
                     alert("GAME OVER");
+                    location.href = "http://pixelswap.fr/endless";
                 }
         }
         }
@@ -137,7 +138,7 @@ createCookie("item", potion,30);
 
 
 
-<p class="lead">Oh un {{ monster.name }} apparait et semble vous barrer la route !</p>
+<p class="lead">Vous devez combattre un {{ monster.name }} avant de continuer !</p>
 
 <a class="btn btn-lg btn-default" onclick="javascript:Combat()"> Lancer le combat</a>
 
@@ -346,6 +347,12 @@ while(pv>0 && PlayerLife>0)
         var pv = 0;
         alert(Joueur + " : " + PlayerLife + "         Ennemi : " + pv + " pv");
         alert("Vous avez gagné!");
+            createCookie("username", Joueur,30);
+            createCookie("life", PlayerLife,30);
+            createCookie("job", classe,30);
+            createCookie("item", potion,30);
+            createCookie("arme",weapon,30);
+        location.href = "../{{ monster.win }}";
     }
     else if(PlayerLife <= 0)
     {
@@ -362,19 +369,27 @@ while(pv>0 && PlayerLife>0)
             else
             {
                 alert("GAME OVER");
+                    createCookie("username", Joueur,30);
+                    createCookie("life", PlayerLife,30);
+                    createCookie("job", classe,30);
+                    createCookie("item", potion,30);
+                    createCookie("arme",weapon,30);
+                    location.href = "../{{ monster.loose }}";
             }
         }
         else
         {
-            alert("GAME OVER")
+            alert("GAME OVER");
+                createCookie("username", Joueur,30);
+                createCookie("life", PlayerLife,30);
+                createCookie("job", classe,30);
+                createCookie("item", potion,30);
+                createCookie("arme",weapon,30);
+            location.href = "../{{ monster.loose }}";
         }
     }
 }
-    createCookie("username", Joueur,30);
-    createCookie("life", PlayerLife,30);
-    createCookie("job", classe,30);
-    createCookie("item", potion,30);
-    createCookie("arme",weapon,30);
+
 }
 </script>
 
